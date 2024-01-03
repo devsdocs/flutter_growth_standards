@@ -149,11 +149,11 @@ class WHOArmCircumferenceChart extends StatelessWidget {
 List<SplineSeries<Map<ZScoreValue, num>, num>> zScoreGen(
   Map<int, Map<ZScoreValue, num>> zs,
 ) {
-  final reverse = zs.map((key, value) => MapEntry(value, key));
+  final reverse = zs.swapKV;
   return zs.entries.first.value.keys.map((zScore) {
     return SplineSeries<Map<ZScoreValue, num>, num>(
       dataSource: zs.values.toList(),
-      xValueMapper: (dx, _) => reverse[dx],
+      xValueMapper: (dx, _) => reverse[dx] as num,
       yValueMapper: (dy, _) => dy[zScore],
       markerSettings: const MarkerSettings(isVisible: true),
       name: '${zScore.value} SD',
@@ -164,11 +164,11 @@ List<SplineSeries<Map<ZScoreValue, num>, num>> zScoreGen(
 List<SplineSeries<Map<PercentileValue, num>, num>> percentileGen(
   Map<int, Map<PercentileValue, num>> perc,
 ) {
-  final reverse = perc.map((key, value) => MapEntry(value, key));
+  final reverse = perc.swapKV;
   return perc.entries.first.value.keys.map((percentile) {
     return SplineSeries<Map<PercentileValue, num>, num>(
       dataSource: perc.values.toList(),
-      xValueMapper: (dx, _) => reverse[dx],
+      xValueMapper: (dx, _) => reverse[dx] as num,
       yValueMapper: (dy, _) => dy[percentile],
       markerSettings: const MarkerSettings(isVisible: true),
       name: '${percentile.value} percentile',
@@ -185,3 +185,7 @@ final zScoreColorMap = {
   ZScoreValue.pos2: Colors.orange,
   ZScoreValue.pos3: const Color.fromARGB(255, 216, 20, 6),
 };
+
+extension MapExt on Map {
+  Map get swapKV => map((key, value) => MapEntry(value, key));
+}
