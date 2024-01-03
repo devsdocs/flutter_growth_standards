@@ -134,32 +134,46 @@ class WHOArmCircumferenceChart extends StatelessWidget {
       ),
       primaryYAxis: const NumericAxis(
         minimum: 5,
-        maximum: 30,
+        maximum: 25,
         axisLine: AxisLine(width: 0),
         edgeLabelPlacement: EdgeLabelPlacement.shift,
         labelFormat: '{value} cm',
         majorTickLines: MajorTickLines(size: 0),
       ),
       tooltipBehavior: TooltipBehavior(enable: true),
-      series: seriesGen(maleZScore),
+      series: zScoreGen(maleZScore),
     );
   }
+}
 
-  List<SplineSeries<Map<ZScoreValue, num>, num>> seriesGen(
-    Map<int, Map<ZScoreValue, num>> maleZScore,
-  ) {
-    final reverse = maleZScore.map((key, value) => MapEntry(value, key));
-    return maleZScore.entries.first.value.keys.map((e) {
-      final mat = ZScoreValue.values.singleWhere((element) => element == e);
-      return SplineSeries<Map<ZScoreValue, num>, num>(
-        dataSource: maleZScore.values.toList(),
-        xValueMapper: (dx, _) => reverse[dx],
-        yValueMapper: (dy, _) => dy[mat],
-        markerSettings: const MarkerSettings(isVisible: true),
-        name: '${mat.value} SD',
-      );
-    }).toList();
-  }
+List<SplineSeries<Map<ZScoreValue, num>, num>> zScoreGen(
+  Map<int, Map<ZScoreValue, num>> zs,
+) {
+  final reverse = zs.map((key, value) => MapEntry(value, key));
+  return zs.entries.first.value.keys.map((zScore) {
+    return SplineSeries<Map<ZScoreValue, num>, num>(
+      dataSource: zs.values.toList(),
+      xValueMapper: (dx, _) => reverse[dx],
+      yValueMapper: (dy, _) => dy[zScore],
+      markerSettings: const MarkerSettings(isVisible: true),
+      name: '${zScore.value} SD',
+    );
+  }).toList();
+}
+
+List<SplineSeries<Map<PercentileValue, num>, num>> percentileGen(
+  Map<int, Map<PercentileValue, num>> perc,
+) {
+  final reverse = perc.map((key, value) => MapEntry(value, key));
+  return perc.entries.first.value.keys.map((percentile) {
+    return SplineSeries<Map<PercentileValue, num>, num>(
+      dataSource: perc.values.toList(),
+      xValueMapper: (dx, _) => reverse[dx],
+      yValueMapper: (dy, _) => dy[percentile],
+      markerSettings: const MarkerSettings(isVisible: true),
+      name: '${percentile.value} percentile',
+    );
+  }).toList();
 }
 
 final zScoreColorMap = {
