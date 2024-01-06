@@ -87,3 +87,23 @@ final zScoreColorMap = {
 extension MapExt<T> on Map<num, Map<T, num>> {
   Map<Map<T, num>, num> get swapKV => map((key, value) => MapEntry(value, key));
 }
+
+const usedZScore = [
+  ZScoreValue.neg3,
+  ZScoreValue.neg2,
+  ZScoreValue.neg1,
+  ZScoreValue.zero,
+  ZScoreValue.pos1,
+  ZScoreValue.pos2,
+  ZScoreValue.pos3,
+];
+
+const usedPercentile = [
+  PercentileValue.$3,
+  PercentileValue.$10,
+  PercentileValue.$25,
+  PercentileValue.$50,
+  PercentileValue.$75,
+  PercentileValue.$90,
+  PercentileValue.$97,
+];

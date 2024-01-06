@@ -134,10 +134,10 @@ packages:
     dependency: transitive
     description:
       name: growth_standards
-      sha256: "2c4d789428a2898e0c71f5a28af6cc92087ea8fb1b19f91bd3a86c972062bf38"
+      sha256: f9614430c47a2683aae86ff7ecb5e8c9cdaac60b7c42b7fe48caa765d1805e75
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   http_parser:
     dependency: transitive
     description:

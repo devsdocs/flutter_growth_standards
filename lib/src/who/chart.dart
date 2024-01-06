@@ -15,6 +15,7 @@ class WHOArmCircumferenceChart extends StatelessWidget {
     final female = armCircumference.data[Sex.female]?.ageData;
 
     final maleData = male?.entries;
+    final femaleData = female?.entries;
 
     final maleZScore = Map.fromEntries(
       maleData!.map(
@@ -23,15 +24,7 @@ class WHOArmCircumferenceChart extends StatelessWidget {
           Map.fromEntries(
             e.value.standardDeviationCutOff.entries.toList()
               ..removeWhere(
-                (element) => ![
-                  ZScoreValue.neg3,
-                  ZScoreValue.neg2,
-                  ZScoreValue.neg1,
-                  ZScoreValue.zero,
-                  ZScoreValue.pos1,
-                  ZScoreValue.pos2,
-                  ZScoreValue.pos3,
-                ].contains(element.key),
+                (element) => !usedZScore.contains(element.key),
               ),
           ),
         ),
@@ -45,22 +38,12 @@ class WHOArmCircumferenceChart extends StatelessWidget {
           Map.fromEntries(
             e.value.percentileCutOff.entries.toList()
               ..removeWhere(
-                (element) => ![
-                  PercentileValue.$3,
-                  PercentileValue.$10,
-                  PercentileValue.$25,
-                  PercentileValue.$50,
-                  PercentileValue.$75,
-                  PercentileValue.$90,
-                  PercentileValue.$97,
-                ].contains(element.key),
+                (element) => !usedPercentile.contains(element.key),
               ),
           ),
         ),
       ),
     );
-
-    final femaleData = female?.entries;
 
     final femaleZScore = Map.fromEntries(
       femaleData!.map(
@@ -69,15 +52,7 @@ class WHOArmCircumferenceChart extends StatelessWidget {
           Map.fromEntries(
             e.value.standardDeviationCutOff.entries.toList()
               ..removeWhere(
-                (element) => ![
-                  ZScoreValue.neg3,
-                  ZScoreValue.neg2,
-                  ZScoreValue.neg1,
-                  ZScoreValue.zero,
-                  ZScoreValue.pos1,
-                  ZScoreValue.pos2,
-                  ZScoreValue.pos3,
-                ].contains(element.key),
+                (element) => !usedZScore.contains(element.key),
               ),
           ),
         ),
@@ -91,15 +66,7 @@ class WHOArmCircumferenceChart extends StatelessWidget {
           Map.fromEntries(
             e.value.percentileCutOff.entries.toList()
               ..removeWhere(
-                (element) => ![
-                  PercentileValue.$3,
-                  PercentileValue.$10,
-                  PercentileValue.$25,
-                  PercentileValue.$50,
-                  PercentileValue.$75,
-                  PercentileValue.$90,
-                  PercentileValue.$97,
-                ].contains(element.key),
+                (element) => !usedPercentile.contains(element.key),
               ),
           ),
         ),
